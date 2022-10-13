@@ -8,6 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RiseTech.Busines.Abstract;
+using RiseTech.Busines.Concrete;
+using RiseTech.DataAccess.Abstract;
+using RiseTech.DataAccess.Concrete;
 using RiseTech.DataAccess.Data;
 using System;
 using System.Collections.Generic;
@@ -28,7 +32,11 @@ namespace RiseTech.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
+            services.AddScoped<IContactsDal, ContactsDal>();
+            services.AddScoped<IPersonsDal,PersonsDal >();
+            services.AddScoped<IContactService, ContactService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
