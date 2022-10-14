@@ -44,6 +44,21 @@ namespace RiseTech.DataAccess.Migrations
                     b.ToTable("ContactInfos");
                 });
 
+            modelBuilder.Entity("RiseTech.Entities.Models.Location", b =>
+                {
+                    b.Property<int>("CityNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CityNumber");
+
+                    b.ToTable("Locations");
+                });
+
             modelBuilder.Entity("RiseTech.Entities.Models.Person", b =>
                 {
                     b.Property<Guid>("UUID")

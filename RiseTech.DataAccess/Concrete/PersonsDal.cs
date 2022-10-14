@@ -11,8 +11,26 @@ namespace RiseTech.DataAccess.Concrete
 {
     public class PersonsDal : GenericRepository<Person>, IPersonsDal
     {
+        private ApplicationDbContext _context;
         public PersonsDal(ApplicationDbContext context) : base(context)
         {
+            _context = context;
         }
+
+        public Person GetPersonInfo(Guid Id)
+        {
+            return _context.Persons.Where(x => x.UUID == Id).Select(person => new Person
+            {
+                Company = person.Company,
+                Surname = person.Surname,
+                ContactInfos = person.ContactInfos,
+                IsDeleted = person.IsDeleted,
+                Name = person.Name,
+                UUID = person.UUID,
+            }).FirstOrDefault();
+
+        }
+
+      
     }
 }

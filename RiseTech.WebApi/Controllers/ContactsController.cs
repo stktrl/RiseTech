@@ -95,5 +95,19 @@ namespace RiseTech.WebApi.Controllers
             }
 
         }
+        [HttpGet("{Id}")]
+        public IActionResult GetContactDetail(Guid Id)
+        {
+            var result = _contactService.GetContactDetail(Id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return StatusCode(result.Code, result);
+            }
+
+        }
     }
 }

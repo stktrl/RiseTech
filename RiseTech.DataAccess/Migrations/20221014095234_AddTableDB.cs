@@ -3,10 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RiseTech.DataAccess.Migrations
 {
-    public partial class AddPersonTableDb : Migration
+    public partial class AddTableDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    CityNumber = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CityName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.CityNumber);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Persons",
                 columns: table => new
@@ -53,6 +66,9 @@ namespace RiseTech.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ContactInfos");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "Persons");

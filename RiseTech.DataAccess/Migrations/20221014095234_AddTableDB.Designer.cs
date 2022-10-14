@@ -10,8 +10,8 @@ using RiseTech.DataAccess.Data;
 namespace RiseTech.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221013164446_AddPersonTableDb")]
-    partial class AddPersonTableDb
+    [Migration("20221014095234_AddTableDB")]
+    partial class AddTableDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,6 +44,21 @@ namespace RiseTech.DataAccess.Migrations
                     b.HasIndex("PersonUUID");
 
                     b.ToTable("ContactInfos");
+                });
+
+            modelBuilder.Entity("RiseTech.Entities.Models.Location", b =>
+                {
+                    b.Property<int>("CityNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CityNumber");
+
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("RiseTech.Entities.Models.Person", b =>

@@ -1,4 +1,5 @@
-﻿using RiseTech.Busines.Abstract;
+﻿using Newtonsoft.Json;
+using RiseTech.Busines.Abstract;
 using RiseTech.Busines.ResultModels;
 using RiseTech.DataAccess.Abstract;
 using RiseTech.Entities.Models;
@@ -12,12 +13,14 @@ namespace RiseTech.Busines.Concrete
 {
     public class ContactService : IContactService
     {
+        private readonly IRedisService _redisService;
         private readonly IPersonsDal _personDal;
         private readonly IContactsDal _contactsDal;
-        public ContactService(IPersonsDal personDal, IContactsDal contactsDal)
+        public ContactService(IPersonsDal personDal, IContactsDal contactsDal, IRedisService redisService)
         {
             _personDal = personDal;
             _contactsDal = contactsDal;
+            _redisService = redisService;
         }
 
         public IResult AddContact(ContactDto Contact)
@@ -32,22 +35,7 @@ namespace RiseTech.Busines.Concrete
                 IsDeleted = false
             };
             _personDal.Add(tempPerson);
-            //if (Contact.ContactInfo!=null)
-            //{
-            //    foreach (var item in Contact.ContactInfo)
-            //    {
-            //        var tempContactInfo = new ContactInfo()
-            //        {
-            //            Content = item.Content,
-            //            InformationType = item.InformationType,
-            //            UUID = new Guid(),
-            //            Person= tempPerson,
-            //            IsDeleted=false
-            //        };
-            //        _contactsDal.Add(tempContactInfo);
-            //    }
-            //}
-
+            
             return new SuccessResult("Contact successfully Added.");
         }
 
@@ -86,11 +74,43 @@ namespace RiseTech.Busines.Concrete
             return new SuccessResult("Contact info successfuly deleted.");
         }
 
+        public IDataResult<ContactDetailDto> GetContactDetail(Guid id)
+        {
+            
+            var redisCheck = _redisService.ReadRedis(id.ToString());
+            if (!redisCheck.IsNull)
+            {
+                return new SuccessDataResult<ContactDetailDto>(redisCheck);
+            }
+
+            var result = _personDal.GetPersonInfo(id);
+            var returnValue = new ContactDetailDto()
+            {
+                Company = result.Company,
+                Surname = result.Surname,
+                Name = result.Name,
+            };
+            foreach (var item in result.ContactInfos)
+            {
+                returnValue.ContactInfo.Add(new ContactInfoDto()
+                {
+                       Content = item.Content,
+                       InformationType = item.InformationType,
+                });
+            }
+
+            _redisService.WriteRedis(id.ToString(),JsonConvert.SerializeObject(returnValue));
+            
+            return new SuccessDataResult<ContactDetailDto>(returnValue);
+        }
+
         public IDataResult<IList<Person>> GetContacts(int pagenumber, int size)
         {
+
             var result = _personDal.Pagination(pagenumber, size);
             return new SuccessDataResult<IList<Person>>(result);
         }
+
 
         public IResult UpdateContact(ContactDto Contact, Guid Id)
         {

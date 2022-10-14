@@ -15,6 +15,7 @@ namespace RiseTech.DataAccess.Data
 
         }
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Location> Locations { get; set; }
         public DbSet<ContactInfo> ContactInfos { get; set; }
     }
 }
