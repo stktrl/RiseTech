@@ -19,7 +19,7 @@ namespace RiseTech.DataAccess.Concrete
 
         public Person GetPersonInfo(Guid Id)
         {
-            return _context.Persons.Where(x => x.UUID == Id).Select(person => new Person
+            return _context.Persons.Where(x => x.UUID == Id&&x.IsDeleted==false).Select(person => new Person
             {
                 Company = person.Company,
                 Surname = person.Surname,

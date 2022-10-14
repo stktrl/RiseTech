@@ -108,6 +108,7 @@ namespace RiseTech.Busines.Concrete
         {
 
             var result = _personDal.Pagination(pagenumber, size);
+            
             return new SuccessDataResult<IList<Person>>(result);
         }
 
