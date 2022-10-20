@@ -10,6 +10,7 @@ namespace RiseTech.Busines.Abstract
 {
     public interface IContactService
     {
+        IDataResult<List<Report>> Report();
         IDataResult<ContactDetailDto> GetContactDetail(Guid id);
         IResult AddContactInfo(ContactInfoDto contactInfo,Guid Id);
         IResult DeleteContactInfo(Guid Id);

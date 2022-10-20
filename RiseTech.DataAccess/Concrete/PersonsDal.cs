@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace RiseTech.DataAccess.Concrete
 {
@@ -31,6 +32,11 @@ namespace RiseTech.DataAccess.Concrete
 
         }
 
-      
+        public List<Report> Report()
+        {
+
+            return _context.Reports.FromSqlRaw("REPORT").ToList();
+
+        }
     }
 }

@@ -69,7 +69,7 @@ namespace RiseTech.WebApi.Controllers
             }
         }
         [HttpPost("{Id}/ContactInfos")]
-        public IActionResult AddContactInfo(Guid Id,[FromBody] ContactInfoDto contactInfoDto)
+        public IActionResult AddContactInfo(Guid Id, [FromBody] ContactInfoDto contactInfoDto)
         {
             var result = _contactService.AddContactInfo(contactInfoDto, Id);
             if (result.Success)
@@ -108,6 +108,19 @@ namespace RiseTech.WebApi.Controllers
                 return StatusCode(result.Code, result);
             }
 
+        }
+        [HttpGet("Report")]
+        public IActionResult Report()
+        {
+            var result = _contactService.Report();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return StatusCode(result.Code, result);
+            }
         }
     }
 }

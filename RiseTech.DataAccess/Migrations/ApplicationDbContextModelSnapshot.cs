@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RiseTech.DataAccess.Data;
+using RiseTech.Entities.Models;
 
 namespace RiseTech.DataAccess.Migrations
 {
@@ -95,6 +96,8 @@ namespace RiseTech.DataAccess.Migrations
                 {
                     b.Navigation("ContactInfos");
                 });
+
+            modelBuilder.Entity<Report>().HasNoKey().ToView(null);
 #pragma warning restore 612, 618
         }
     }

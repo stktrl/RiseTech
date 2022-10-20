@@ -11,5 +11,7 @@ namespace RiseTech.DataAccess.Abstract
     public interface IPersonsDal:IGenericRepository<Person>
     {
         Person GetPersonInfo(Guid Id);
+
+        List<Report> Report();
     }
 }

@@ -112,6 +112,11 @@ namespace RiseTech.Busines.Concrete
             return new SuccessDataResult<IList<Person>>(result);
         }
 
+        public IDataResult<List<Report>> Report()
+        {
+           var result = _personDal.Report();
+            return new SuccessDataResult<List<Report>>(result);
+        }
 
         public IResult UpdateContact(ContactDto Contact, Guid Id)
         {
