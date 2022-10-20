@@ -10,8 +10,8 @@ using RiseTech.DataAccess.Data;
 namespace RiseTech.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221014095234_AddTableDB")]
-    partial class AddTableDB
+    [Migration("20221020221625_AddPersonTableDb")]
+    partial class AddPersonTableDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,21 +46,6 @@ namespace RiseTech.DataAccess.Migrations
                     b.ToTable("ContactInfos");
                 });
 
-            modelBuilder.Entity("RiseTech.Entities.Models.Location", b =>
-                {
-                    b.Property<int>("CityNumber")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CityName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CityNumber");
-
-                    b.ToTable("Locations");
-                });
-
             modelBuilder.Entity("RiseTech.Entities.Models.Person", b =>
                 {
                     b.Property<Guid>("UUID")
@@ -82,6 +67,20 @@ namespace RiseTech.DataAccess.Migrations
                     b.HasKey("UUID");
 
                     b.ToTable("Persons");
+                });
+
+            modelBuilder.Entity("RiseTech.Entities.Models.Report", b =>
+                {
+                    b.Property<int>("KayitliKisi")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KayitliTelefonNumarasi")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Sehir")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("RiseTech.Entities.Models.ContactInfo", b =>

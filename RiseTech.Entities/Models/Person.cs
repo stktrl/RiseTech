@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 
 namespace RiseTech.Entities.Models
 {
-    public class Person:IEntity
+    public class Person:Entity
     {
-        [Key]
-        public Guid UUID { get; set; }
+        
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Company { get; set; }
         public virtual List<ContactInfo> ContactInfos { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

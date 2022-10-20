@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RiseTech.Entities.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RiseTech.DataAccess.Data
 {
-    public interface IGenericRepository<T> where T : class
+    public interface IGenericRepository<T> where T : Entity
     {
         T Get(Expression<Func<T, bool>> filter);
         IList<T> GetList(Expression<Func<T, bool>> filter = null);

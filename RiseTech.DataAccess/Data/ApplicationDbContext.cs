@@ -16,7 +16,6 @@ namespace RiseTech.DataAccess.Data
         }
         public virtual DbSet<Report> Reports { get; set; }
         public DbSet<Person> Persons { get; set; }
-        public DbSet<Location> Locations { get; set; }
         public DbSet<ContactInfo> ContactInfos { get; set; }
     }
 }

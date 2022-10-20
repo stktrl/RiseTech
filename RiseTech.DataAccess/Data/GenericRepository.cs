@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RiseTech.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RiseTech.DataAccess.Data
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : Entity
     {
         private ApplicationDbContext _context;
         public GenericRepository(ApplicationDbContext context)
@@ -36,19 +37,19 @@ namespace RiseTech.DataAccess.Data
 
         public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter)
         {
-            return _context.Set<T>().SingleOrDefault(filter);
+            return _context.Set<T>().Where(x=>x.IsDeleted==false).SingleOrDefault(filter);
         }
 
         public IList<T> GetList(System.Linq.Expressions.Expression<Func<T, bool>> filter = null)
         {
             return filter == null
                    ? _context.Set<T>().ToList()
-                   : _context.Set<T>().Where(filter).ToList();
+                   : _context.Set<T>().Where(filter).Where(x=>x.IsDeleted==false).ToList();
         }
 
         public IList<T> Pagination(int page, int pageSize)
         {
-            return _context.Set<T>().Skip(page).Take(pageSize).ToList();
+            return _context.Set<T>().Where(x=>x.IsDeleted==false).Skip(page).Take(pageSize).ToList();
         }
 
         public void Update(T entity)

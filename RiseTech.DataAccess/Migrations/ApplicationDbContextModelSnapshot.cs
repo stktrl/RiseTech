@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RiseTech.DataAccess.Data;
-using RiseTech.Entities.Models;
 
 namespace RiseTech.DataAccess.Migrations
 {
@@ -45,21 +44,6 @@ namespace RiseTech.DataAccess.Migrations
                     b.ToTable("ContactInfos");
                 });
 
-            modelBuilder.Entity("RiseTech.Entities.Models.Location", b =>
-                {
-                    b.Property<int>("CityNumber")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CityName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CityNumber");
-
-                    b.ToTable("Locations");
-                });
-
             modelBuilder.Entity("RiseTech.Entities.Models.Person", b =>
                 {
                     b.Property<Guid>("UUID")
@@ -83,6 +67,20 @@ namespace RiseTech.DataAccess.Migrations
                     b.ToTable("Persons");
                 });
 
+            modelBuilder.Entity("RiseTech.Entities.Models.Report", b =>
+                {
+                    b.Property<int>("KayitliKisi")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KayitliTelefonNumarasi")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Sehir")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Reports");
+                });
+
             modelBuilder.Entity("RiseTech.Entities.Models.ContactInfo", b =>
                 {
                     b.HasOne("RiseTech.Entities.Models.Person", "Person")
@@ -96,8 +94,6 @@ namespace RiseTech.DataAccess.Migrations
                 {
                     b.Navigation("ContactInfos");
                 });
-
-            modelBuilder.Entity<Report>().HasNoKey().ToView(null);
 #pragma warning restore 612, 618
         }
     }

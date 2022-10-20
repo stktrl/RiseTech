@@ -63,6 +63,14 @@ namespace RiseTech.Busines.Concrete
             }
             tempEntity.IsDeleted = true;
             _personDal.Update(tempEntity);
+
+            var contactInfos = _contactsDal.GetList(x=>x.Person.UUID == Id);
+            foreach (var item in contactInfos)
+            {
+                item.IsDeleted = true;
+                _contactsDal.Update(item);
+
+            }
             return new SuccessResult("Contact successfuly deleted");
         }
 

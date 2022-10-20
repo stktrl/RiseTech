@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace RiseTech.Entities.Models
 {
-    public class Location
+    public class Entity
     {
         [Key]
-        public int CityNumber { get; set; }
-        public string CityName { get; set; }
-
+        public Guid UUID { get; set; }
+        public bool  IsDeleted { get; set; }
     }
 }

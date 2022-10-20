@@ -9,14 +9,10 @@ using System.Threading.Tasks;
 
 namespace RiseTech.Entities.Models
 {
-    public class ContactInfo:IEntity
+    public class ContactInfo:Entity
     {
-        [Key]
-        public Guid UUID { get; set; }
- 
         public virtual Person Person { get; set; }
         public InformationType InformationType { get; set; }
         public string Content { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }
